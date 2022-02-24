@@ -1,8 +1,12 @@
 
 import React, {useState} from "react"
 import { ethers } from "ethers";
+import {MyEstadoGlobalContext} from './MyGlobalState.js';
 
 const WalletCard =() => {
+    
+
+    const {mostrar, setMostrar} = React.useContext(MyEstadoGlobalContext);
     const [errorMessage,setErrorMessage] = useState(null);
     const [defaultAccount,setDefaultAccount] = useState(null);
     const [userBalance,setUserBalance] = useState(null);
@@ -39,6 +43,14 @@ const WalletCard =() => {
     }
 
 
+    const chainChangedHandler = () => {
+        window.location.reload();
+    }
+
+    window.ethereum.on("accountsChanged", accountChangedHandler);
+    window.ethereum.on("chainChanged", chainChangedHandler);
+
+    setMostrar (true);
 
 
     return (
@@ -48,14 +60,28 @@ const WalletCard =() => {
             <button onClick={conectWalletHandler}>{connButtonText}
             </button> 
 
-           
+            <div className="addressDisplay" ><h3> Address: {defaultAccount}</h3></div>
+
+            
+            
+
+
+            <div className="balanceDisplay">
+                <h3>Balance: {userBalance}</h3>
+            </div>
+
+
+
             
 
 
             {errorMessage}
 
         </div>
+        
     );
 }
+
+
 
 export default WalletCard;

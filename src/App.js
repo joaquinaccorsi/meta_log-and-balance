@@ -1,12 +1,16 @@
 import WalletCard from "./WalletCard";
 import './App.css';
-import WalletBalance from "./WalletBalance";
+import { MyEstadoGlobalContext } from "./MyGlobalState";
+import React from "react"
 
 function App() {
+  const [mostrar, setMostrar] = React.useState(false);
   return (
     <div className="App">
-    <WalletCard/>
-    <WalletBalance/>
+    <MyEstadoGlobalContext.Provider value={{mostrar, setMostrar}}/> 
+      <WalletCard/>
+    <MyEstadoGlobalContext.Provider/>
+  
     </div>
   );
 }
